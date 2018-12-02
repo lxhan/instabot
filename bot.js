@@ -51,12 +51,17 @@ class Bot {
   }
 
   async like(hashtag) {
-    const rand = this.getRandomInt(1, 10);
-    await this.driver.get(`${this.hashtagUrl}/${hashtag}`).then(() => {
-      for (let i = 0; i < rand * 100; i++) {
-        this.driver.executeScript(`window.scrollBy(0, ${i})`);
+    const rand = this.getRandomInt(10, 30);
+    const randTime = this.getRandomInt(30, 50);
+    await this.driver.get(`${this.hashtagUrl}/${hashtag}`).then(async () => {
+      for (let i = 0; i < rand; i++) {
+        await this.driver.executeScript(
+          `window.scrollTo(0, document.body.scrollHeight)`
+        );
+        await this.driver.sleep(3000);
       }
     });
+
     const els = await this.driver.wait(
       until.elementsLocated(By.css('a')),
       this.timeout
@@ -74,8 +79,10 @@ class Bot {
                 this.timeout
               )
             )
-            .then(el => el.click());
-          await this.driver.sleep(rand * 1000);
+            .then(async el => {
+              await this.driver.sleep(randTime * 1000);
+              await el.click();
+            });
         }
       });
   }
