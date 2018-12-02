@@ -1,7 +1,7 @@
 const { Bot } = require('./bot');
 
-const username = 'lxhan';
-const password = '7%neklSz!l6grCz(b1';
+const username = 'user';
+const password = 'pass';
 
 const mainTimeout = 10000;
 const errTimeout = 60000;
